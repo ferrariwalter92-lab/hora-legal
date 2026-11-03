@@ -1,34 +1,81 @@
+<meta charset="utf-8">
 <div style="max-width:720px;margin:120px auto;padding:0 20px;font-family:Inter,Helvetica,Arial,sans-serif;line-height:1.6;">
   <a href="/" style="color:#0033FF;text-decoration:none;">← Home</a>
+  <span style="color:#999;margin:0 8px;">·</span>
+  <a href="/privacy-it" style="color:#0033FF;text-decoration:none;" lang="it">Italiano</a>
   <h1 style="font-size:40px;font-weight:600;margin:16px 0;">Privacy Policy – HORA</h1>
 
-  <p><strong>Last updated: February 26, 2026</strong></p>
+  <p><strong>Last updated: [date of publication]</strong></p>
 
-  <p>HORA is an independent mobile application developed and managed by Walter Ferrari, acting as Data Controller under applicable data protection laws, including the General Data Protection Regulation (GDPR).</p>
+  <p>HORA is an app that lets you know when your friends are free. This page explains which data we use, why, who can see it and what your rights are.</p>
 
-  <p>For privacy-related inquiries, contact: privacy@hora-app.com</p>
+  <h2>Who we are</h2>
+  <p>The data controller is Walter Ferrari, [postal address of the controller].</p>
+  <p>For anything about privacy, write to <a href="mailto:privacy@hora-app.com" style="color:#0033FF;text-decoration:none;">privacy@hora-app.com</a>.</p>
 
-  <h2>Information We Collect</h2>
+  <h2>What data we use, why, and who sees it</h2>
   <ul>
-    <li>Phone number (used for OTP authentication and account verification)</li>
-    <li>Email address</li>
-    <li>Instagram username (optional and voluntarily provided)</li>
-    <li>Device push notification token</li>
-    <li>Technical logs such as IP address, device type, and login timestamps</li>
-    <li>Limited usage data for product improvement</li>
+    <li><strong>Phone number.</strong> To sign you in with a code sent by SMS. Only you see it. A friend sees it only after a mutual “It's Hora!” and only if you chose to share it.</li>
+    <li><strong>Email address.</strong> To contact you if needed, for example about a problem with your account. Only you see it.</li>
+    <li><strong>Username.</strong> So your friends can find you. All registered users can see it.</li>
+    <li><strong>Profile photo and bio (optional).</strong> To introduce yourself to friends. Registered users can see them. The photo is stored in Firebase Storage.</li>
+    <li><strong>Instagram username (optional).</strong> To share it with a friend. A friend sees it only after a mutual “It's Hora!” and only if you chose to share it.</li>
+    <li><strong>Friends list and friend requests.</strong> This is the core of the app. Only you and the friend involved see them.</li>
+    <li><strong>“Free” status and times (from / until).</strong> To let friends know you're free. Only the friends you choose each time you mark yourself free, and only while you are free. Nobody sees who else you chose.</li>
+    <li><strong>Last group of friends you picked.</strong> To suggest it next time. Only you see it.</li>
+    <li><strong>“Hora?” requests (who asked whom, and when).</strong> To share contacts when the wish to meet is mutual (within 12 hours). Only the two people involved see them.</li>
+    <li><strong>Blocked users.</strong> To stop the people you block from contacting you. Only you see this list.</li>
+    <li><strong>Reports.</strong> To handle abuse: who reported whom, the reason and the text. Only the people who run HORA see them.</li>
+    <li><strong>Push notification token.</strong> To send you notifications. Nobody sees it: only our server uses it.</li>
+    <li><strong>App language.</strong> To write notifications in your language. Nobody sees it.</li>
+    <li><strong>Anonymous daily counters.</strong> To check that the app works, for example how many requests are sent each day. They contain no names and no user identifiers.</li>
   </ul>
 
-  <p>HORA does not collect location data. HORA does not access your contact list. HORA does not use advertising tracking technologies. HORA does not sell personal data.</p>
+  <p>HORA does not use your location. HORA does not access your address book. There are no ads, no tracking across apps or websites, and no analytics tools inside the app. We do not sell your data.</p>
 
-  <h2>Analytics</h2>
-  <p>HORA uses analytics tools provided by Firebase to improve functionality. Analytics data is used exclusively for internal product improvement and not for advertising or tracking.</p>
+  <h2>Legal basis</h2>
+  <ul>
+    <li><strong>Contract (art. 6.1.b GDPR).</strong> Most data is needed to give you the service you asked for when you signed up.</li>
+    <li><strong>Legitimate interest (art. 6.1.f GDPR).</strong> Blocks, reports and security checks protect users from abuse. The anonymous daily counters help us keep the app working. You can object to this use (see “Your rights”).</li>
+  </ul>
 
-  <h2>Data Retention</h2>
-  <p>Personal data is retained until the user deletes their account. Upon deletion, data is removed from active systems and deleted from backups according to technical retention schedules.</p>
+  <h2>Who processes the data for us</h2>
+  <ul>
+    <li><strong>Google Firebase</strong> (Google Ireland Ltd), as our data processor. It hosts the database, the server functions and the profile photos.</li>
+    <li><strong>Firebase Authentication</strong> (Google) sends the SMS login codes.</li>
+    <li><strong>Firebase Cloud Messaging</strong> (Google) delivers push notifications. On iPhone they go through the Apple Push Notification service (Apple).</li>
+  </ul>
+  <p>We share data with no one else, except when the law requires it.</p>
 
-  <h2>Account Deletion</h2>
-  <p>Users may delete their account directly within the app. Deletion permanently removes associated personal data.</p>
+  <h2>Where the data is stored</h2>
+  <p>Data is stored in the European Union: the database in the eur3 region (Europe) and the server functions in europe-west1 (Belgium). Profile photos are stored in Firebase Storage [region of the photo storage].</p>
+  <p>Google may process some data outside the EU, for example to deliver SMS or notifications. In that case it uses the European Commission's standard contractual clauses.</p>
+
+  <h2>How long we keep it</h2>
+  <ul>
+    <li>Your data stays as long as your account exists.</li>
+    <li>When you delete your account, your data is deleted immediately from our active systems.</li>
+    <li>Backup copies are deleted within [backup retention period].</li>
+    <li>Reports made by you or about you are kept for [12 months], also after deletion, to handle abuse.</li>
+    <li>Anonymous counters contain no personal data.</li>
+  </ul>
+
+  <h2>Deleting your account</h2>
+  <p>In the app: Profile → Settings → Delete account. You can also write to privacy@hora-app.com. More details on the <a href="/accountdeletion" style="color:#0033FF;text-decoration:none;">account deletion page</a>.</p>
+
+  <h2>Your rights</h2>
+  <p>You can ask to access, correct, delete or export your data (portability). You can ask us to restrict its use, and you can object to the uses based on legitimate interest. Write to privacy@hora-app.com.</p>
+  <p>You can also complain to the Italian data protection authority, the Garante per la protezione dei dati personali (<a href="https://www.garanteprivacy.it" style="color:#0033FF;text-decoration:none;">garanteprivacy.it</a>), or to the authority of the EU country where you live.</p>
+
+  <h2>Automated decisions</h2>
+  <p>We make no decisions about you based only on automated processing, and we do no profiling.</p>
+
+  <h2>Minors</h2>
+  <p>HORA is not meant for anyone under [14] years old.</p>
 
   <h2>Security</h2>
-  <p>Data is protected using secure cloud infrastructure and encryption in transit.</p>
+  <p>Data is stored on Google's cloud infrastructure and encrypted in transit. Access rules make sure each user can read only what they are allowed to see.</p>
+
+  <h2>Changes</h2>
+  <p>If we change this policy, we will tell you in the app and update the date at the top of this page.</p>
 </div>

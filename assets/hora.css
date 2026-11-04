@@ -1,0 +1,661 @@
+/* Hora · hora-app.com
+   Identità «ora blu»: lo sfondo è il cielo all'ora in cui guardi,
+   le luci bianche sono le persone, l'anello bianco è il momento Hora.
+   Nessun servizio esterno: font in casa, niente cookie, niente statistiche. */
+
+@font-face {
+  font-family: "Mona Sans";
+  src: url("/assets/font/mona-sans.woff2") format("woff2");
+  font-weight: 200 900;
+  font-stretch: 75% 125%;
+  font-display: swap;
+}
+
+:root {
+  /* i quattro cieli */
+  --cielo-giorno: linear-gradient(180deg, #9CC6F2 0%, #C9E0F7 60%, #F3F7FB 100%);
+  --cielo-tramonto: linear-gradient(180deg, #3B6FD8 0%, #6E8FE0 55%, #F0A574 100%);
+  --cielo-orablu: linear-gradient(180deg, #1C3B9E 0%, #2D56C4 60%, #5872C9 100%);
+  --cielo-notte: linear-gradient(180deg, #07102E 0%, #0E1E5C 70%, #1B2E78 100%);
+
+  --notte: #07102E;
+  --notte-2: #0B1640;
+  --carta: #F3F6FF;          /* testo chiaro */
+  --carta-2: #C9D3F2;        /* testo chiaro secondario (≥ 4.5:1 su --notte) */
+  --inchiostro: #0E1A3A;     /* testo scuro */
+  --inchiostro-2: #3A4766;   /* testo scuro secondario (≥ 4.5:1 su #F3F7FB) */
+  --luce: #FFFFFF;
+  --link-chiaro: #1C3B9E;
+  --fuoco: #FFFFFF;
+
+  /* il colore dell'ora: tutta la pagina, non solo il cielo (default: ora blu, anche senza JS) */
+  --s1: #1C3B9E; --s2: #2D56C4; --s3: #4060C6; --s4: #5872C9;   /* cielo: 0 · 55 · 80 · 100% */
+  --testo-cielo: #F3F6FF;
+  --fondo: #13297A; --fondo-2: #183189; --fondo-piede: #0D1F5C;
+  --testo: #F3F6FF; --testo-2: #D3DBF5; --accento: #BFD0FF;
+  --linea: rgba(255, 255, 255, .16); --punto-spento: rgba(255, 255, 255, .25);
+  --punto-acceso: #FFFFFF; --alone: rgba(255, 255, 255, .12); --anello: #FFFFFF;
+  --accento-legale: #2D46B0;
+  --cielo-ora: linear-gradient(180deg, var(--s1) 0%, var(--s2) 55%, var(--s3) 80%, var(--s4) 100%);
+
+  --largo: 125%;             /* Mona Sans larga, per i titoli */
+  --gutter: clamp(20px, 5vw, 48px);
+  --max: 1160px;
+  color-scheme: dark;
+}
+
+/* contrasto ≥ 4,5:1 controllato per ogni ora (testo e testo secondario su ogni fondo, testo sul cielo) */
+:root[data-cielo="giorno"] {
+  --s1: #9CC6F2; --s2: #C9E0F7; --s3: #DEEBF9; --s4: #F3F7FB;
+  --testo-cielo: #0E1A3A;
+  --fondo: #F3F7FB; --fondo-2: #E3ECF8; --fondo-piede: #D8E3F2;
+  --testo: #0E1A3A; --testo-2: #3A4766; --accento: #2448B0;
+  --linea: rgba(14, 26, 58, .14); --punto-spento: rgba(14, 26, 58, .2);
+  --punto-acceso: #2D56C4; --alone: rgba(45, 86, 196, .16); --anello: #1C3B9E;
+  --accento-legale: #1C3B9E; --fuoco: #0E1A3A;
+  color-scheme: light;
+}
+:root[data-cielo="tramonto"] {
+  --s1: #2A58C2; --s2: #3563CF; --s3: #4166CB; --s4: #F0A574;
+  --fondo: #2A2C70; --fondo-2: #343576; --fondo-piede: #201F57;
+  --testo: #FFF6EE; --testo-2: #DCD6EA; --accento: #FFC39A;
+  --alone: rgba(255, 195, 154, .2);
+  --accento-legale: #A2410F;
+}
+:root[data-cielo="notte"] {
+  --s1: #07102E; --s2: #0C1A50; --s3: #122364; --s4: #1B2E78;
+  --fondo: #07102E; --fondo-2: #0B1640; --fondo-piede: #040A1F;
+  --testo: #F3F6FF; --testo-2: #C9D3F2; --accento: #C9D3F2;
+  --accento-legale: #1B2E78;
+}
+/* quando l'ora cambia mentre guardi, i colori scivolano (dove il browser sa animare le variabili) */
+@property --s1 { syntax: "<color>"; inherits: true; initial-value: #1C3B9E; }
+@property --s2 { syntax: "<color>"; inherits: true; initial-value: #2D56C4; }
+@property --s3 { syntax: "<color>"; inherits: true; initial-value: #4060C6; }
+@property --s4 { syntax: "<color>"; inherits: true; initial-value: #5872C9; }
+@property --fondo { syntax: "<color>"; inherits: true; initial-value: #13297A; }
+@property --fondo-2 { syntax: "<color>"; inherits: true; initial-value: #183189; }
+@property --fondo-piede { syntax: "<color>"; inherits: true; initial-value: #0D1F5C; }
+@property --testo { syntax: "<color>"; inherits: true; initial-value: #F3F6FF; }
+@property --testo-2 { syntax: "<color>"; inherits: true; initial-value: #D3DBF5; }
+@property --testo-cielo { syntax: "<color>"; inherits: true; initial-value: #F3F6FF; }
+@property --accento { syntax: "<color>"; inherits: true; initial-value: #BFD0FF; }
+:root {
+  transition: --s1 2.5s ease, --s2 2.5s ease, --s3 2.5s ease, --s4 2.5s ease, --fondo 2.5s ease, --fondo-2 2.5s ease,
+    --fondo-piede 2.5s ease, --testo 2.5s ease, --testo-2 2.5s ease, --testo-cielo 2.5s ease, --accento 2.5s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--testo);
+  font-family: "Mona Sans", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  font-stretch: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+a { color: inherit; text-underline-offset: .18em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--fuoco); outline-offset: 3px; border-radius: 6px; }
+
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+
+.salta {
+  position: absolute; left: 12px; top: -60px; z-index: 10;
+  background: var(--luce); color: var(--inchiostro); padding: 10px 16px; border-radius: 999px;
+  font-weight: 600; text-decoration: none;
+}
+.salta:focus { top: 12px; }
+
+.contenitore { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+/* ---------- la scritta ---------- */
+.scritta { width: 100%; height: auto; fill: currentColor; }
+.scritta .o { fill: currentColor; }
+
+/* ---------- il cielo (dipende dall'ora: data-cielo su <html>) ---------- */
+.cielo { background: var(--cielo-ora); color: var(--testo-cielo); }
+
+/* ---------- testata ---------- */
+.testata {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding-top: 20px; padding-bottom: 20px;
+}
+.testata .marchio { width: 92px; color: inherit; display: block; }
+.testata nav { display: flex; gap: 4px; align-items: center; font-size: .9375rem; }
+.testata nav a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px;
+  text-decoration: none; border-radius: 999px; font-weight: 600;
+}
+.testata nav a:hover { text-decoration: underline; }
+
+/* ---------- apertura ---------- */
+.apertura { position: relative; min-height: 100svh; display: flex; flex-direction: column; overflow: hidden; }
+.apertura .corpo {
+  flex: 1; display: flex; flex-direction: column; justify-content: center;
+  padding-top: 4vh; padding-bottom: 22vh;
+}
+.ora-adesso {
+  font-size: .875rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 600;
+  margin: 0 0 18px; font-variant-numeric: tabular-nums;
+}
+.apertura h1 { margin: 0; max-width: 760px; }
+.apertura h1 .scritta { filter: drop-shadow(0 0 28px rgba(255,255,255,.28)); }
+[data-cielo="giorno"] .apertura h1 .scritta { filter: none; }
+.riga {
+  font-stretch: var(--largo); font-weight: 700;
+  font-size: clamp(1.75rem, 6.4vw, 3.5rem); line-height: 1.05; letter-spacing: -.01em;
+  margin: clamp(22px, 4vw, 40px) 0 16px; max-width: 17ch; text-wrap: balance;
+}
+.sotto { margin: 0 0 30px; max-width: 34ch; font-size: clamp(1.0625rem, 2.2vw, 1.25rem); }
+.azioni { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; }
+.bottone {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 54px; padding: 0 26px; border-radius: 999px;
+  background: var(--luce); color: var(--inchiostro);
+  font-weight: 700; font-size: 1.0625rem; text-decoration: none;
+  box-shadow: 0 8px 30px rgba(7, 16, 46, .25);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.bottone:hover { transform: translateY(-1px); box-shadow: 0 10px 34px rgba(7, 16, 46, .35); text-decoration: none; }
+.bottone:active { transform: translateY(0); }
+[data-cielo="giorno"] .bottone { background: var(--inchiostro); color: var(--carta); }
+[data-cielo="giorno"] :focus-visible { outline-color: var(--inchiostro); }
+.bottone svg { width: 20px; height: 20px; fill: currentColor; }
+.nota-piccola { font-size: .9375rem; margin: 0; }
+
+/* le luci in fondo all'apertura: persone, alcune accese */
+.luci {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 18vh; min-height: 110px;
+  pointer-events: none;
+}
+.luci span {
+  position: absolute; width: 10px; height: 10px; border-radius: 50%;
+  background: rgba(255, 255, 255, .28);
+}
+.luci span.on {
+  background: var(--luce);
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, .16), 0 0 22px var(--luce);
+  animation: accendi 1.6s ease-out both;
+}
+[data-cielo="giorno"] .luci span { background: rgba(14, 26, 58, .16); }
+[data-cielo="giorno"] .luci span.on { background: var(--luce); box-shadow: 0 0 0 5px rgba(255,255,255,.5), 0 0 18px rgba(14,26,58,.18); }
+@keyframes accendi { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: none; } }
+
+/* ---------- sezioni ---------- */
+.sezione { padding: clamp(72px, 12vw, 140px) 0; }
+.sezione + .sezione { padding-top: 0; }
+.occhiello {
+  font-size: .8125rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700;
+  color: var(--accento); margin: 0 0 14px;
+}
+/* dal cielo dell'apertura al fondo della pagina, senza scalino */
+main > .sezione:first-child { background: linear-gradient(180deg, var(--s4) 0, var(--fondo) clamp(56px, 9vw, 110px)); }
+.sezione h2 {
+  font-stretch: var(--largo); font-weight: 800; letter-spacing: -.01em;
+  font-size: clamp(2rem, 5.6vw, 3.5rem); line-height: 1.02; margin: 0 0 18px; text-wrap: balance;
+}
+.attacco { color: var(--testo-2); max-width: 46ch; font-size: clamp(1.0625rem, 2vw, 1.25rem); margin: 0; }
+
+/* come funziona */
+.passi {
+  list-style: none; padding: 0; margin: clamp(40px, 7vw, 72px) 0 0;
+  display: grid; gap: 56px;
+}
+@media (min-width: 900px) { .passi { grid-template-columns: repeat(3, 1fr); gap: 36px; } }
+.passo { display: flex; flex-direction: column; align-items: flex-start; }
+.passo .numero {
+  font-variant-numeric: tabular-nums; font-weight: 600; font-size: .875rem; letter-spacing: .08em;
+  color: var(--testo-2); margin: 28px 0 8px;
+}
+.passo h3 {
+  font-stretch: var(--largo); font-weight: 700; font-size: clamp(1.5rem, 3.4vw, 1.75rem);
+  line-height: 1.1; margin: 0 0 10px;
+}
+.passo p { margin: 0; color: var(--testo-2); max-width: 36ch; }
+.passo p strong { color: var(--testo); font-weight: 600; }
+
+/* ---------- telefoni disegnati ---------- */
+.tel {
+  --w: min(280px, 78vw);
+  width: var(--w); aspect-ratio: 9 / 18.6;
+  border-radius: calc(var(--w) * .15);
+  padding: calc(var(--w) * .16) calc(var(--w) * .07) calc(var(--w) * .08);
+  display: flex; flex-direction: column; position: relative; overflow: hidden;
+  color: var(--carta); font-size: 14px; line-height: 1.3;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.14) inset, 0 30px 70px rgba(0, 0, 0, .45);
+  outline: 8px solid #02060F; outline-offset: 0;
+  margin: 8px;
+}
+.tel::before { /* l'isola in cima */
+  content: ""; position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+  width: 31%; height: 24px; border-radius: 999px; background: #02060F;
+}
+.tel.tramonto { background: var(--cielo-tramonto); }
+.tel.orablu { background: var(--cielo-orablu); }
+.tel.notte { background: var(--cielo-notte); }
+.tel .stato { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; opacity: .85; }
+.tel .mini { width: 64px; margin-top: 14px; }
+.tel .grande-t { font-stretch: var(--largo); font-weight: 700; font-size: 27px; line-height: 1.02; margin: 22px 0 18px; }
+.tel .etichetta { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; opacity: .85; margin-bottom: 10px; }
+.tel .scelte { display: flex; gap: 6px; flex-wrap: wrap; }
+.tel .scelta { border: 1.5px solid rgba(255,255,255,.45); border-radius: 999px; padding: 7px 11px; font-weight: 600; font-size: 13px; }
+.tel .scelta.si { background: var(--luce); color: var(--inchiostro); border-color: var(--luce); }
+.tel .fino { margin-top: 12px; font-size: 13px; opacity: .9; font-variant-numeric: tabular-nums; }
+.tel .cta {
+  margin-top: auto; padding: 14px; border-radius: 999px; background: var(--luce); color: #0B1A4A;
+  text-align: center; font-weight: 700; font-size: 15px;
+}
+.tel .cta.vuota { background: transparent; color: var(--carta); border: 1.5px solid rgba(255,255,255,.45); }
+.tel .riga-p {
+  display: flex; align-items: center; gap: 12px; padding: 11px 2px;
+  border-top: 1px solid rgba(255,255,255,.2);
+}
+.tel .faccia { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,.22); flex: none; }
+.tel .nome { flex: 1; height: 9px; border-radius: 5px; background: rgba(255,255,255,.5); }
+.tel .nome.corto { flex: .6; margin-right: auto; }
+.tel .spunta {
+  width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.5); flex: none;
+  display: grid; place-items: center;
+}
+.tel .spunta.si { background: var(--luce); border-color: var(--luce); }
+.tel .spunta.si::after {
+  content: ""; width: 9px; height: 5px; border-left: 2px solid #0B1A4A; border-bottom: 2px solid #0B1A4A;
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+.tel .piede-t { margin: 14px 0 12px; font-size: 13px; opacity: .9; }
+.tel .momento { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; }
+.anello {
+  width: 112px; height: 112px; border-radius: 50%;
+  border: 18px solid var(--luce);
+  box-shadow: 0 0 60px rgba(255, 255, 255, .5), inset 0 0 22px rgba(255,255,255,.35);
+}
+.tel .momento .big { font-stretch: var(--largo); font-weight: 800; font-size: 34px; line-height: 1; }
+.tel .contatti { width: 100%; text-align: left; }
+.tel .contatti .riga-p { font-size: 13px; }
+.tel .contatti b { font-weight: 600; width: 72px; flex: none; }
+.tel .avviso {
+  position: absolute; left: 7%; right: 7%; bottom: 8%;
+  background: rgba(2, 6, 15, .82); border-radius: 14px; padding: 10px 14px;
+  display: flex; justify-content: space-between; font-size: 13px;
+}
+.tel .avviso b { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- cosa non è ---------- */
+.non-e {
+  list-style: none; padding: 0; margin: clamp(36px, 6vw, 60px) 0 0;
+  display: grid; gap: 0; border-top: 1px solid var(--linea);
+}
+@media (min-width: 760px) { .non-e { grid-template-columns: repeat(2, 1fr); column-gap: 48px; } }
+.non-e li { display: flex; gap: 18px; padding: 24px 0; border-bottom: 1px solid var(--linea); }
+.non-e .spenta { width: 12px; height: 12px; border-radius: 50%; background: var(--punto-spento); margin-top: 9px; flex: none; }
+.non-e h3 { font-stretch: var(--largo); font-weight: 700; font-size: 1.375rem; line-height: 1.15; margin: 0 0 6px; }
+.non-e p { margin: 0; color: var(--testo-2); }
+
+/* ---------- dati ---------- */
+.dati { background: var(--fondo-2); }
+.dati .sezione { padding-top: clamp(72px, 12vw, 140px); }
+.punti-dati { list-style: none; padding: 0; margin: clamp(32px, 6vw, 56px) 0 32px; display: grid; gap: 22px; max-width: 760px; }
+.punti-dati li { display: flex; gap: 16px; }
+.punti-dati li::before {
+  content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--punto-acceso); flex: none; margin-top: 9px;
+  box-shadow: 0 0 0 4px var(--alone);
+}
+.punti-dati strong { font-weight: 600; }
+.freccia { font-weight: 700; display: inline-flex; align-items: center; min-height: 44px; }
+
+/* ---------- chiusura ---------- */
+.chiusura { background: var(--cielo-ora); color: var(--testo-cielo); text-align: center; padding: clamp(96px, 16vw, 180px) 0; }
+.chiusura .anello { margin: 0 auto 36px; width: clamp(120px, 22vw, 180px); height: clamp(120px, 22vw, 180px); border-width: clamp(19px, 3.4vw, 28px); border-color: var(--anello); }
+[data-cielo="giorno"] .chiusura .anello { box-shadow: 0 0 50px rgba(28, 59, 158, .25); }
+.chiusura p { font-stretch: var(--largo); font-weight: 800; font-size: clamp(2rem, 6vw, 3.75rem); line-height: 1.02; margin: 0; }
+.chiusura .ora-piccola { font-stretch: 100%; font-weight: 600; font-size: .9375rem; letter-spacing: .1em; color: var(--testo-2); margin-top: 20px; font-variant-numeric: tabular-nums; }
+
+/* ---------- piede ---------- */
+.piede { background: var(--fondo-piede); color: var(--testo-2); padding: 56px 0 40px; font-size: .9375rem; }
+.piede .griglia { display: grid; gap: 32px; }
+@media (min-width: 760px) { .piede .griglia { grid-template-columns: 1.2fr 1fr 1fr; } }
+.piede .marchio { width: 96px; color: var(--testo); margin-bottom: 14px; }
+.piede h2 { font-size: .8125rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--testo); margin: 0 0 8px; }
+.piede ul { list-style: none; padding: 0; margin: 0; }
+.piede li a { display: inline-flex; align-items: center; min-height: 40px; color: var(--testo-2); }
+.piede li a:hover { color: var(--testo); }
+.piede p { margin: 0 0 8px; }
+.piede .fondo { border-top: 1px solid var(--linea); margin-top: 40px; padding-top: 20px; font-size: .875rem; }
+
+/* ---------- pagine legali: sfondo chiaro, righe da ~70 caratteri ---------- */
+.legale { background: #F3F7FB; color: var(--inchiostro); color-scheme: light; }
+/* il testo resta su carta chiara a ogni ora; la testata è il cielo del momento, l'accento ne prende il colore */
+.legale main :focus-visible { outline-color: var(--accento-legale); }
+.legale .testa-legale { padding-bottom: clamp(36px, 6vw, 64px); }
+.legale main { padding: clamp(32px, 6vw, 56px) 0 clamp(64px, 10vw, 112px); }
+.testo { max-width: 70ch; margin: 0 auto; font-size: 1.0625rem; line-height: 1.65; }
+.testo .vai { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 8px; }
+.testo .vai a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+.testo .vai span { color: var(--inchiostro-2); }
+.testo a { color: var(--accento-legale); }
+.testo h1 {
+  font-stretch: var(--largo); font-weight: 800; letter-spacing: -.01em;
+  font-size: clamp(2rem, 5.4vw, 3rem); line-height: 1.05; margin: 8px 0 18px; text-wrap: balance;
+}
+.testo h2 {
+  font-stretch: 112%; font-weight: 700; font-size: clamp(1.25rem, 2.6vw, 1.5rem); line-height: 1.2;
+  margin: 2.4em 0 .6em; scroll-margin-top: 24px; text-wrap: balance;
+}
+.testo p, .testo ul { margin: 0 0 1em; }
+.testo ul { padding-left: 1.2em; }
+.testo li { margin-bottom: .55em; }
+.testo li::marker { color: var(--accento-legale); }
+.testo strong { font-weight: 650; }
+.testo .riquadro { background: #fff; border: 1px solid #D5DFEE; border-radius: 14px; padding: 18px 20px 4px; }
+.testo .muto { color: var(--inchiostro-2); }
+.testo section { margin: 0; }
+.indice {
+  background: #fff; border: 1px solid #D5DFEE; border-radius: 16px;
+  padding: 18px 22px; margin: 28px 0 8px;
+}
+.indice h2 { font-size: .8125rem; letter-spacing: .12em; text-transform: uppercase; font-stretch: 100%; margin: 0 0 6px; color: var(--inchiostro-2); }
+.indice ol { margin: 0; padding-left: 1.3em; columns: 1; }
+@media (min-width: 720px) { .indice ol { columns: 2; column-gap: 32px; } }
+.indice li { margin: 0; break-inside: avoid; }
+.indice a { display: inline-block; padding: 6px 0; text-decoration: none; }
+.indice a:hover { text-decoration: underline; }
+
+/* ---------- movimento: solo se va bene a chi guarda ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* ---------- aggiunte: telefono nell'apertura, lampioni ---------- */
+.piede .marchio { display: block; }
+.eroe { display: grid; gap: 48px; align-items: center; }
+.eroe-tel { display: none; }
+@media (min-width: 960px) {
+  .eroe { grid-template-columns: 1fr auto; }
+  .eroe-tel { display: flex; --w: 300px; transform: rotate(3deg); margin-right: 24px; }
+}
+.tel .lampione { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,.28); flex: none; margin: 0 4px; }
+.tel .lampione.on { background: var(--luce); box-shadow: 0 0 0 4px rgba(255,255,255,.2), 0 0 16px var(--luce); }
+.tel .riga-p b { flex: 1; font-weight: 600; }
+.tel .riga-p .quando { font-size: 12px; opacity: .85; }
+.tel .sotto-t { margin-top: 22px; }
+.tel .contatti .riga-p b { flex: none; }
+.tel .riga-p .nome { flex: 1; }
+.tel .riga-p .nome.corto { flex: .6; margin-right: auto; }
+/* tramonto: l'arancio resta in basso (dopo l'80%), dietro le luci, così il testo bianco si legge (≥ 4,5:1) */
+@media (max-width: 699px) {
+  .apertura { min-height: 92svh; }
+  .apertura .corpo { justify-content: flex-start; padding-top: 7vh; padding-bottom: 150px; }
+}
+.piede p a { display: inline-flex; align-items: center; min-height: 40px; }
+
+/* =====================================================================
+   Movimento («ora blu» in movimento). Tutto sotto .anima, che esiste solo se
+   chi guarda non ha chiesto meno movimento e se JavaScript c'è: senza, la pagina
+   è quella ferma qui sopra, completa. Si muovono solo transform e opacity
+   (eccezione: il tratto dei due anelli che si disegnano, una volta sola).
+   ===================================================================== */
+:root {
+  /* molle: curve vere (smorzamento 0,5 e 0,72), un filo oltre e indietro */
+  --molla: cubic-bezier(.34, 1.4, .64, 1);
+  --morbida: cubic-bezier(.16, 1, .3, 1);
+  --esce: cubic-bezier(.16, 1, .3, 1);
+}
+@supports (transition-timing-function: linear(0, 1)) {
+  :root {
+    --molla: linear(0, 0.042, 0.15, 0.297, 0.462, 0.626, 0.777, 0.906, 1.008, 1.083, 1.132, 1.157, 1.163, 1.154, 1.136, 1.111, 1.084, 1.057, 1.033, 1.013, 0.997, 0.985, 0.978, 0.974, 0.974, 0.975, 0.978, 0.983, 0.987, 0.991, 0.995, 0.998, 1.001, 1.003, 1.004, 1);
+    --morbida: linear(0, 0.028, 0.097, 0.193, 0.302, 0.414, 0.523, 0.624, 0.714, 0.792, 0.857, 0.91, 0.951, 0.983, 1.006, 1.022, 1.031, 1.037, 1.038, 1.038, 1.035, 1.032, 1.027, 1.023, 1.019, 1.015, 1.011, 1.008, 1.006, 1.004, 1);
+  }
+}
+.scritta .o-anello { display: none; }
+.tel .incontro { position: relative; display: grid; place-items: center; }
+.tel .incontro .luce-a, .tel .incontro .luce-b { display: none; }
+.chiusura .anello svg { display: none; }
+
+/* ---------- bottoni: una molla morbida ---------- */
+.anima .bottone { transition: transform .7s var(--molla), box-shadow .3s ease; }
+.anima .bottone:hover { transform: translateY(-2px) scale(1.03); }
+.anima .bottone:active { transform: scale(.96); transition-duration: .12s; }
+
+/* ---------- il cielo vive: macchie lente di luce e d'ombra ---------- */
+.anima .apertura { isolation: isolate; }
+.anima .apertura::before {
+  content: ""; position: absolute; inset: -30% -20%; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(40% 36% at 20% 22%, rgba(7, 16, 46, .30), transparent 70%),
+    radial-gradient(34% 30% at 78% 12%, rgba(7, 16, 46, .18), transparent 70%),
+    radial-gradient(55% 26% at 60% 92%, rgba(255, 255, 255, .13), transparent 70%);
+  animation: cielo-vivo 26s ease-in-out infinite alternate;
+}
+.anima[data-cielo="giorno"] .apertura::before {
+  background:
+    radial-gradient(40% 36% at 20% 22%, rgba(255, 255, 255, .45), transparent 70%),
+    radial-gradient(55% 26% at 60% 92%, rgba(255, 255, 255, .35), transparent 70%);
+}
+[data-cielo="tramonto"].anima .apertura::before {
+  background:
+    radial-gradient(40% 36% at 20% 22%, rgba(7, 16, 46, .26), transparent 70%),
+    radial-gradient(60% 28% at 55% 100%, rgba(255, 190, 140, .30), transparent 70%);
+}
+@keyframes cielo-vivo {
+  from { transform: translate3d(-4%, -2%, 0) scale(1); }
+  50% { transform: translate3d(1%, 2%, 0) scale(1.06); }
+  to { transform: translate3d(4%, -1%, 0) scale(1.02); }
+}
+
+/* ---------- apertura: la scritta, la O che si chiude, le righe ---------- */
+.anima .eroe h1 .scritta path:not(.o) {
+  transform-box: fill-box;
+  animation: sale 1.1s var(--esce) both;
+}
+.anima .eroe h1 .scritta path:nth-child(1) { animation-delay: .1s; }
+.anima .eroe h1 .scritta path:nth-child(2) { animation-delay: .32s; }
+.anima .eroe h1 .scritta path:nth-child(3) { animation-delay: .42s; }
+.anima .eroe h1 .scritta .o { opacity: 0; }
+.anima .eroe h1 .scritta .o-anello {
+  display: inline; fill: none; stroke: currentColor; stroke-width: 156;
+  stroke-dasharray: 1776; stroke-dashoffset: 1776;
+  transform: rotate(-90deg); transform-origin: 1244.5px 360.5px;
+  animation: disegna 1.25s cubic-bezier(.65, 0, .35, 1) .2s forwards;
+}
+@keyframes disegna { to { stroke-dashoffset: 0; } }
+@keyframes sale { from { opacity: 0; transform: translateY(38%); } to { opacity: 1; transform: none; } }
+@keyframes compare { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+.anima .eroe .ora-adesso { animation: compare .9s var(--esce) .05s both; }
+.anima .eroe .riga { animation: compare 1s var(--esce) .55s both; }
+.anima .eroe .sotto { animation: compare 1s var(--esce) .7s both; }
+.anima .eroe .azioni { animation: compare 1s var(--esce) .85s both; }
+.anima .testata { animation: appare 1s ease .1s both; }
+@keyframes appare { from { opacity: 0; } to { opacity: 1; } }
+
+/* il telefono dell'apertura arriva, poi galleggia piano */
+@media (min-width: 960px) {
+  .anima .eroe-tel {
+    transform: translateY(var(--py, 0px)) rotate(3deg);
+    animation: tel-arriva 1.3s var(--morbida) .5s both, galleggia 7s ease-in-out 1.8s infinite alternate;
+  }
+  .anima .eroe-tel .lampione.on { animation: lampione 1s var(--molla) both; }
+  .anima .eroe-tel .riga-p:nth-child(4) .lampione.on { animation-delay: 1.5s; }
+  .anima .eroe-tel .riga-p:nth-child(5) .lampione.on { animation-delay: 2.1s; }
+  .anima .eroe-tel .riga-p .quando { animation: appare .8s ease both; }
+  .anima .eroe-tel .riga-p:nth-child(4) .quando { animation-delay: 1.7s; }
+  .anima .eroe-tel .riga-p:nth-child(5) .quando { animation-delay: 2.3s; }
+}
+@keyframes tel-arriva { from { opacity: 0; translate: 0 70px; } to { opacity: 1; translate: 0 0; } }
+@keyframes galleggia { from { translate: 0 0; } to { translate: 0 -10px; } }
+@keyframes lampione { from { opacity: .3; transform: scale(.55); } to { opacity: 1; transform: none; } }
+
+/* ---------- le luci in fondo: si accendono una per una, poi respirano ---------- */
+.anima .luci { will-change: transform; }
+.anima .luci span, .anima .luci span.on {
+  background: rgba(255, 255, 255, .28); box-shadow: none;
+  animation: appare 1.2s ease var(--d0, .4s) both;
+}
+[data-cielo="giorno"].anima .luci span { background: rgba(14, 26, 58, .16); }
+.anima .luci span::after, .anima .luci span::before {
+  content: ""; position: absolute; border-radius: 50%; pointer-events: none;
+}
+.anima .luci span::after { /* la luce */
+  inset: 0; background: var(--luce);
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, .16);
+  opacity: 0; transform: scale(.3);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.anima .luci span::before { /* l'alone, che respira */
+  left: 50%; top: 50%; width: 96px; height: 96px; margin: -48px 0 0 -48px;
+  background: radial-gradient(circle, rgba(255, 255, 255, .7) 0, rgba(255, 255, 255, .2) 24%, rgba(255, 255, 255, 0) 70%);
+  opacity: 0; transition: opacity 1.6s ease;
+  animation: respira var(--b, 4s) ease-in-out var(--bd, 0s) infinite alternate;
+}
+[data-cielo="giorno"].anima .luci span::after { box-shadow: 0 0 0 2px rgba(14, 26, 58, .22), 0 0 0 7px rgba(255, 255, 255, .7); }
+.anima .luci span.accesa::after { opacity: 1; transform: none; transition: opacity .25s ease, transform 1s var(--molla); }
+.anima .luci span.accesa::before { opacity: 1; transition-duration: .6s; }
+@keyframes respira { from { transform: scale(.72); } to { transform: scale(1.12); } }
+
+/* ---------- comparse allo scorrimento ---------- */
+.anima :is(.sezione .occhiello, .sezione h2, .sezione .attacco, .passo .numero, .passo h3, .passo > p,
+  .non-e li, .punti-dati li, .sezione .freccia) {
+  transition: opacity .9s ease var(--r, 0s), transform 1.1s var(--esce) var(--r, 0s);
+}
+.anima :is(.sezione .occhiello, .sezione h2, .sezione .attacco, .passo .numero, .passo h3, .passo > p,
+  .non-e li, .punti-dati li, .sezione .freccia):not(.visto) {
+  opacity: 0; transform: translateY(26px);
+}
+/* i punti dei dati: luci che si accendono */
+.anima .punti-dati li::before { transition: opacity .6s ease calc(var(--r, 0s) + .25s), transform .9s var(--molla) calc(var(--r, 0s) + .25s); }
+.anima .punti-dati li:not(.visto)::before { opacity: .25; transform: scale(.4); }
+/* «cosa non è»: il punto si accende un attimo e si spegne */
+.anima .non-e li.visto .spenta { animation: spegne 1.4s ease calc(var(--r, 0s) + .3s) both; }
+@keyframes spegne { 0% { background: rgba(255,255,255,.25); } 30% { background: #fff; transform: scale(1.15); } 100% { background: rgba(255,255,255,.25); transform: none; } }
+
+/* ---------- i tre telefoni ---------- */
+.anima .passo { --t: calc(var(--i, 0) * 160ms); }
+@media (max-width: 899px) { .anima .passo { --t: 0ms; } }
+.anima .passo .tel { transition: opacity .8s ease var(--t), transform 1.2s var(--morbida) var(--t); }
+.anima .passo:not(.visto) .tel { opacity: 0; transform: translateY(56px) scale(.96); }
+
+/* 01 · tramonto: si sceglie fino a quando, uno si accende */
+.anima .passo .tramonto .scelta { position: relative; z-index: 0; }
+.anima .passo .tramonto .scelta.si { background: transparent; color: inherit; border-color: rgba(255, 255, 255, .45); }
+.anima .passo .tramonto .scelta::before {
+  content: ""; position: absolute; inset: -1.5px; border-radius: inherit; background: var(--luce);
+  z-index: -1; opacity: 0; transform: scale(.8);
+}
+.anima .passo.visto .tramonto .scelta:nth-child(1) { animation: chip-testo .8s ease calc(var(--t) + .75s) both; }
+.anima .passo.visto .tramonto .scelta:nth-child(1)::before { animation: chip-passa .8s ease calc(var(--t) + .75s) both; }
+.anima .passo.visto .tramonto .scelta:nth-child(2) { animation: chip-testo .8s ease calc(var(--t) + 1.3s) both; }
+.anima .passo.visto .tramonto .scelta:nth-child(2)::before { animation: chip-passa .8s ease calc(var(--t) + 1.3s) both; }
+.anima .passo.visto .tramonto .scelta.si { animation: chip-resta-t .3s ease calc(var(--t) + 1.85s) both; }
+.anima .passo.visto .tramonto .scelta.si::before { animation: chip-resta .7s var(--molla) calc(var(--t) + 1.85s) both; }
+@keyframes chip-passa { 0% { opacity: 0; transform: scale(.8); } 25%, 70% { opacity: 1; transform: none; } 100% { opacity: 0; transform: scale(.94); } }
+@keyframes chip-testo { 0%, 100% { color: var(--carta); } 20%, 75% { color: var(--inchiostro); } }
+@keyframes chip-resta { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: none; } }
+@keyframes chip-resta-t { from { color: var(--carta); } to { color: var(--inchiostro); } }
+.anima .passo .tramonto .fino { opacity: 0; transform: translateY(6px); }
+.anima .passo.visto .tramonto .fino { animation: compare-p .6s var(--esce) calc(var(--t) + 2.1s) both; }
+@keyframes compare-p { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.anima .passo.visto .tramonto .cta { animation: premi .55s ease calc(var(--t) + 2.5s) both; }
+@keyframes premi { 0%, 100% { transform: none; } 35% { transform: scale(.94); } }
+.anima .passo .tramonto .sotto-t .lampione.on { opacity: .3; transform: scale(.55); }
+.anima .passo.visto .tramonto .sotto-t .lampione.on { animation: lampione 1s var(--molla) calc(var(--t) + 2.9s) both; }
+
+/* 02 · ora blu: la lista, e tre spunte */
+.anima .passo .orablu .riga-p { opacity: 0; transform: translateX(-12px); }
+.anima .passo.visto .orablu .riga-p { animation: entra-riga .7s var(--esce) both; }
+.anima .passo.visto .orablu .riga-p:nth-child(4) { animation-delay: calc(var(--t) + .5s); }
+.anima .passo.visto .orablu .riga-p:nth-child(5) { animation-delay: calc(var(--t) + .58s); }
+.anima .passo.visto .orablu .riga-p:nth-child(6) { animation-delay: calc(var(--t) + .66s); }
+.anima .passo.visto .orablu .riga-p:nth-child(7) { animation-delay: calc(var(--t) + .74s); }
+.anima .passo.visto .orablu .riga-p:nth-child(8) { animation-delay: calc(var(--t) + .82s); }
+@keyframes entra-riga { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: none; } }
+.anima .passo .orablu .spunta.si { background: transparent; border-color: rgba(255, 255, 255, .5); position: relative; }
+.anima .passo .orablu .spunta.si::before {
+  content: ""; position: absolute; inset: -1.5px; border-radius: 50%; background: var(--luce); scale: 0;
+}
+.anima .passo .orablu .spunta.si::after { position: relative; opacity: 0; scale: .3; }
+.anima .passo.visto .orablu .spunta.si::before { animation: spunta-fondo .7s var(--molla) both; }
+.anima .passo.visto .orablu .spunta.si::after { animation: spunta-segno .45s var(--esce) both; }
+.anima .passo.visto .orablu .riga-p:nth-child(4) .spunta::before { animation-delay: calc(var(--t) + 1.35s); }
+.anima .passo.visto .orablu .riga-p:nth-child(4) .spunta::after { animation-delay: calc(var(--t) + 1.5s); }
+.anima .passo.visto .orablu .riga-p:nth-child(5) .spunta::before { animation-delay: calc(var(--t) + 1.8s); }
+.anima .passo.visto .orablu .riga-p:nth-child(5) .spunta::after { animation-delay: calc(var(--t) + 1.95s); }
+.anima .passo.visto .orablu .riga-p:nth-child(7) .spunta::before { animation-delay: calc(var(--t) + 2.25s); }
+.anima .passo.visto .orablu .riga-p:nth-child(7) .spunta::after { animation-delay: calc(var(--t) + 2.4s); }
+@keyframes spunta-fondo { from { scale: 0; } to { scale: 1; } }
+@keyframes spunta-segno { from { opacity: 0; scale: .3; } to { opacity: 1; scale: 1; } }
+.anima .passo .orablu .piede-t { opacity: 0; }
+.anima .passo.visto .orablu .piede-t { animation: compare-p .7s var(--esce) calc(var(--t) + 2.8s) both; }
+
+/* 03 · notte: due luci si cercano, si toccano, diventano l'anello */
+.anima .passo .incontro .luce-a, .anima .passo .incontro .luce-b {
+  display: block; position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px;
+  border-radius: 50%; background: var(--luce); z-index: 1;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, .18), 0 0 18px 4px rgba(255, 255, 255, .55);
+  opacity: 0;
+}
+.anima .passo.visto .incontro .luce-a { animation: cerca-a 1.5s cubic-bezier(.45, 0, .75, .9) calc(var(--t) + .55s) both, sparisce .12s linear calc(var(--t) + 2.05s) forwards; }
+.anima .passo.visto .incontro .luce-b { animation: cerca-b 1.5s cubic-bezier(.45, 0, .75, .9) calc(var(--t) + .55s) both, sparisce .12s linear calc(var(--t) + 2.05s) forwards; }
+@keyframes cerca-a {
+  0% { opacity: 0; transform: translate(-70px, 46px) scale(.4); }
+  22% { opacity: 1; transform: translate(-70px, 46px) scale(1); }
+  60% { transform: translate(-48px, 4px); }
+  100% { opacity: 1; transform: translate(-7px, 0); }
+}
+@keyframes cerca-b {
+  0% { opacity: 0; transform: translate(64px, -38px) scale(.4); }
+  30% { opacity: 1; transform: translate(64px, -38px) scale(1); }
+  64% { transform: translate(46px, -6px); }
+  100% { opacity: 1; transform: translate(7px, 0); }
+}
+@keyframes sparisce { to { opacity: 0; } }
+.anima .passo .incontro .anello { opacity: 0; transform: scale(.18); }
+.anima .passo.visto .incontro .anello { animation: anello-apre 1.1s var(--molla) calc(var(--t) + 2.05s) both; }
+@keyframes anello-apre { 0% { opacity: 0; transform: scale(.18); } 1% { opacity: 1; transform: scale(.18); } 100% { opacity: 1; transform: none; } }
+.anima .passo .incontro::after { /* il lampo quando si toccano */
+  content: ""; position: absolute; left: 50%; top: 50%; width: 220px; height: 220px; margin: -110px 0 0 -110px;
+  border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 255, 255, .7) 0, rgba(255, 255, 255, .2) 30%, rgba(255, 255, 255, 0) 65%);
+  opacity: 0;
+}
+.anima .passo.visto .incontro::after { animation: lampo 1.4s ease-out calc(var(--t) + 2.02s) both; }
+@keyframes lampo { 0% { opacity: 0; transform: scale(.3); } 12% { opacity: 1; } 100% { opacity: 0; transform: scale(1.2); } }
+.anima .passo .notte .big, .anima .passo .notte .contatti .riga-p, .anima .passo .notte .piede-t { opacity: 0; }
+.anima .passo.visto .notte .big { animation: compare-big .9s var(--esce) calc(var(--t) + 2.45s) both; }
+@keyframes compare-big { from { opacity: 0; transform: translateY(18px) scale(.96); } to { opacity: 1; transform: none; } }
+.anima .passo.visto .notte .contatti .riga-p { animation: compare-p .7s var(--esce) calc(var(--t) + 2.8s) both; }
+.anima .passo.visto .notte .contatti .riga-p + .riga-p { animation-delay: calc(var(--t) + 2.92s); }
+.anima .passo.visto .notte .piede-t { animation: compare-p .7s var(--esce) calc(var(--t) + 3.2s) both; }
+
+/* ---------- chiusura: l'anello si disegna ---------- */
+.anima .chiusura .anello { border-width: 0; box-shadow: none; position: relative; }
+.anima .chiusura .anello svg {
+  display: block; width: 100%; height: 100%; overflow: visible;
+  transform: rotate(-90deg);
+}
+.anima .chiusura .anello circle {
+  fill: none; stroke: var(--anello); stroke-width: 15.6;
+  stroke-dasharray: 266; stroke-dashoffset: 266;
+  transition: stroke-dashoffset 1.5s cubic-bezier(.65, 0, .35, 1) .15s;
+}
+.anima .chiusura.visto .anello circle { stroke-dashoffset: 0; }
+.anima .chiusura .anello::after {
+  content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
+  box-shadow: 0 0 60px rgba(255, 255, 255, .5), inset 0 0 22px rgba(255, 255, 255, .35);
+  opacity: 0; transition: opacity 1.2s ease 1.35s;
+}
+.anima .chiusura.visto .anello::after { opacity: 1; }
+.anima .chiusura.visto .anello { animation: chiude .9s var(--molla) 1.5s both; }
+@keyframes chiude { 0% { transform: scale(1); } 30% { transform: scale(1.06); } 100% { transform: none; } }
+.anima .chiusura p { transition: opacity .9s ease 1.7s, transform 1.1s var(--esce) 1.7s; }
+.anima .chiusura:not(.visto) p { opacity: 0; transform: translateY(24px); }

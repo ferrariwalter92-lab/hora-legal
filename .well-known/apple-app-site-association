@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["B6RJMDMK8U.app.hora.ios"],
+        "components": [
+          { "/": "/a/*", "comment": "Inviti: hora-app.com/a/<nome> apre l'app" }
+        ]
+      }
+    ]
+  }
+}

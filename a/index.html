@@ -1,97 +1,47 @@
-<!DOCTYPE html>
-<html lang="it">
+<!doctype html>
+<html lang="it" data-cielo="orablu">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="robots" content="noindex" />
-  <title>Invito – HORA</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-      background-color: #ffffff;
-      color: #0a0a0a;
-      line-height: 1.6;
-    }
-
-    .container {
-      max-width: 480px;
-      margin: 80px auto;
-      padding: 0 20px;
-      text-align: center;
-    }
-
-    .logo {
-      font-size: 40px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      margin-bottom: 32px;
-    }
-
-    h1 {
-      font-size: 26px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      overflow-wrap: anywhere;
-    }
-
-    p {
-      font-size: 16px;
-      margin-bottom: 16px;
-    }
-
-    a {
-      color: #1a4fff;
-      text-decoration: none;
-    }
-
-    .button {
-      display: block;
-      padding: 14px 20px;
-      margin: 12px 0;
-      border-radius: 999px;
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    .primary {
-      background: #0052FF;
-      color: #ffffff;
-    }
-
-    .store {
-      border: 1px solid #d0d5dd;
-      color: #0a0a0a;
-    }
-
-    .store.soon {
-      color: #999;
-      pointer-events: none;
-    }
-
-    .muted {
-      color: #666;
-      font-size: 14px;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Invito – HORA</title>
+<meta name="description" content="Ti hanno invitato su Hora.">
+<meta name="theme-color" content="#07102E">
+<meta property="og:title" content="Invito – HORA">
+<meta property="og:description" content="Ti hanno invitato su Hora.">
+<meta property="og:image" content="https://hora-app.com/assets/hora-og.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/icona.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/icona-180.png">
+<link rel="preload" href="/assets/font/mona-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/hora.css">
 </head>
-<body>
-  <div class="container">
-    <div class="logo">HORA</div>
-
-    <h1 id="title">Ti hanno invitato su Hora</h1>
-    <p id="lead">L'app per vedersi con gli amici quando siete liberi.</p>
-
-    <a id="open" class="button primary" href="/">Apri in Hora</a>
-
-    <p class="muted" id="noapp" style="margin-top:32px;">Non hai ancora Hora? Scaricala:</p>
-    <a id="appstore" class="button store soon" href="#">App Store · presto</a>
-    <a id="playstore" class="button store soon" href="#">Google Play · presto</a>
-
-    <p class="muted" id="after" style="margin-top:32px;"></p>
-  </div>
-
-  <script>
+<body class="invito">
+<div class="apertura cielo">
+<header class="contenitore testata"><a class="marchio" href="/" aria-label="Hora"><svg class="scritta" viewBox="0 0 3325 721" aria-hidden="true" focusable="false"><path d="M0.0 710.5L150.0 710.5L150.0 411.5L650.0 411.5L650.0 710.5L800.0 710.5L800.0 10.5L650.0 10.5L650.0 285.5L150.0 285.5L150.0 10.5L0.0 10.5Z"/><path d="M1687.0 710.5L1837.0 710.5L1837.0 438.5L2033.0 438.5L2239.0 710.5L2415.0 710.5L2224.2 458.6L2224.6 459.0C2212.3 442.7 2217.6 430.0 2237.2 424.5L2237.3 424.5C2336.4 397.2 2387.0 329.9 2387.0 224.5C2387.0 83.3 2296.0 10.5 2119.5 10.5L1687.0 10.5ZM1837.0 312.5L1837.0 136.5L2119.5 136.5C2195.1 136.5 2234.0 166.4 2234.0 224.5C2234.0 282.6 2195.1 312.5 2119.5 312.5Z"/><path d="M2455.0 710.5L2613.4 710.5L2704.8 537.5L3075.2 537.5L3166.6 710.5L3325.0 710.5L3233.6 537.5L3167.0 411.5L2969.2 37.3L2955.0 10.5L2825.0 10.5L2810.8 37.3L2613.0 411.5L2546.4 537.5ZM2771.4 411.5L2890.0 187.1L3008.6 411.5Z"/><path class="o" d="M1605.0 360.5C1605.0 161.4 1443.6 -0.0 1244.5 -0.0C1045.4 -0.0 884.0 161.4 884.0 360.5C884.0 559.6 1045.4 721.0 1244.5 721.0C1443.6 721.0 1605.0 559.6 1605.0 360.5ZM1449.0 360.5C1449.0 473.4 1357.4 565.0 1244.5 565.0C1131.6 565.0 1040.0 473.4 1040.0 360.5C1040.0 247.6 1131.6 156.0 1244.5 156.0C1357.4 156.0 1449.0 247.6 1449.0 360.5Z"/></svg></a></header>
+<main class="contenitore corpo invito-corpo">
+<h1 id="title" class="riga">Ti hanno invitato su Hora</h1>
+<p id="lead" class="sotto">Per le sere che non avevi programmato.</p>
+<a id="open" class="bottone" href="/">Apri in Hora</a>
+<p class="nota-piccola" id="noapp">Non hai ancora Hora? Scaricala:</p>
+<a id="appstore" class="button store soon" href="#">App Store · presto</a>
+<a id="playstore" class="button store soon" href="#">Google Play · presto</a>
+<p class="nota-piccola" id="after"></p>
+</main>
+<div class="luci" aria-hidden="true"><span style="left:1.6%;bottom:24px"></span><span style="left:6.1%;bottom:19px"></span><span style="left:9.5%;bottom:37px"></span><span class="on" style="left:12%;bottom:46px;animation-delay:.4s"></span><span style="left:15.7%;bottom:42px"></span><span style="left:19.4%;bottom:20px"></span><span style="left:24%;bottom:67px"></span><span style="left:26.9%;bottom:28px"></span><span style="left:31.8%;bottom:75px"></span><span class="on" style="left:35.4%;bottom:39px;animation-delay:.9s"></span><span class="on" style="left:40.1%;bottom:17px;animation-delay:1.4s"></span><span style="left:43.5%;bottom:33px"></span><span style="left:45.5%;bottom:22px"></span><span style="left:49.5%;bottom:66px"></span><span style="left:52.9%;bottom:51px"></span><span style="left:57.7%;bottom:38px"></span><span style="left:61.2%;bottom:18px"></span><span class="on" style="left:63.7%;bottom:27px;animation-delay:1.9s"></span><span style="left:68.9%;bottom:41px"></span><span style="left:71.7%;bottom:51px"></span><span style="left:75.7%;bottom:33px"></span><span style="left:80.2%;bottom:59px"></span><span class="on" style="left:82.6%;bottom:51px;animation-delay:2.4s"></span><span style="left:87%;bottom:70px"></span><span style="left:91.2%;bottom:32px"></span><span style="left:95.5%;bottom:22px"></span></div>
+</div>
+<style>
+.invito-corpo { align-items: flex-start; }
+.invito-corpo .riga { overflow-wrap: anywhere; }
+.invito-corpo #noapp { margin: 36px 0 12px; }
+.invito-corpo #after { margin-top: 24px; max-width: 34ch; }
+.button.store { display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; margin: 0 0 10px; border-radius: 999px;
+  border: 1.5px solid rgba(255,255,255,.6); text-decoration: none; font-weight: 600; }
+[data-cielo="giorno"] .button.store { border-color: rgba(14,26,58,.5); }
+.button.store.soon { opacity: .85; pointer-events: none; border-style: dashed; }
+</style>
+<script>
     (function () {
       // Store links: fill in when Hora is on the stores.
       var APP_STORE_URL = '';
@@ -102,7 +52,7 @@
       var txt = en ? {
         title: '@{u} invites you to Hora',
         anon: "You've been invited to Hora",
-        lead: 'The app to see friends when you\'re both free.',
+        lead: 'For the evenings you didn\'t plan.',
         open: 'Open in Hora',
         noapp: "Don't have Hora yet? Get it:",
         soon: ' · coming soon',
@@ -110,7 +60,7 @@
       } : {
         title: '@{u} ti invita su Hora',
         anon: 'Ti hanno invitato su Hora',
-        lead: 'L\'app per vedersi con gli amici quando siete liberi.',
+        lead: 'Per le sere che non avevi programmato.',
         open: 'Apri in Hora',
         noapp: 'Non hai ancora Hora? Scaricala:',
         soon: ' · presto',
@@ -166,5 +116,6 @@
       }
     })();
   </script>
+<script src="/assets/cielo.js"></script>
 </body>
 </html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="robots" content="noindex" />
+  <title>Invito – HORA</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background-color: #ffffff;
+      color: #0a0a0a;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 80px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
+
+    a {
+      color: #1a4fff;
+      text-decoration: none;
+    }
+
+    .button {
+      display: block;
+      padding: 14px 20px;
+      margin: 12px 0;
+      border-radius: 999px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .primary {
+      background: #0052FF;
+      color: #ffffff;
+    }
+
+    .store {
+      border: 1px solid #d0d5dd;
+      color: #0a0a0a;
+    }
+
+    .store.soon {
+      color: #999;
+      pointer-events: none;
+    }
+
+    .muted {
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">HORA</div>
+
+    <h1 id="title">Ti hanno invitato su Hora</h1>
+    <p id="lead">L'app per vedersi con gli amici quando siete liberi.</p>
+
+    <a id="open" class="button primary" href="/">Apri in Hora</a>
+
+    <p class="muted" id="noapp" style="margin-top:32px;">Non hai ancora Hora? Scaricala:</p>
+    <a id="appstore" class="button store soon" href="#">App Store · presto</a>
+    <a id="playstore" class="button store soon" href="#">Google Play · presto</a>
+
+    <p class="muted" id="after" style="margin-top:32px;"></p>
+  </div>
+
+  <script>
+    (function () {
+      // Store links: fill in when Hora is on the stores.
+      var APP_STORE_URL = '';
+      var PLAY_STORE_URL = '';
+      var ANDROID_PACKAGE = 'com.friends_hangout_app';
+
+      var en = !/^it\b/i.test(navigator.language || 'it');
+      var txt = en ? {
+        title: '@{u} invites you to Hora',
+        anon: "You've been invited to Hora",
+        lead: 'The app to see friends when you\'re both free.',
+        open: 'Open in Hora',
+        noapp: "Don't have Hora yet? Get it:",
+        soon: ' · coming soon',
+        after: 'After signing up, open this link again and you\'ll find @{u} ready to add.'
+      } : {
+        title: '@{u} ti invita su Hora',
+        anon: 'Ti hanno invitato su Hora',
+        lead: 'L\'app per vedersi con gli amici quando siete liberi.',
+        open: 'Apri in Hora',
+        noapp: 'Non hai ancora Hora? Scaricala:',
+        soon: ' · presto',
+        after: 'Dopo la registrazione riapri questo link: troverai @{u} pronto da aggiungere.'
+      };
+      if (en) document.documentElement.lang = 'en';
+
+      // Username from /a/<username> or from ?u=<username> (404.html sends here).
+      function readUsername() {
+        var m = location.pathname.match(/^\/a\/([^\/]+)\/?$/);
+        var raw = m && m[1] !== 'index.html' ? m[1] : null;
+        if (!raw) {
+          var q = location.search.match(/[?&]u=([^&#]*)/);
+          raw = q ? q[1] : null;
+        }
+        if (!raw) return null;
+        try { raw = decodeURIComponent(raw); } catch (e) { return null; }
+        raw = raw.replace(/^@/, '').toLowerCase();
+        return /^[a-z0-9_]{3,20}$/.test(raw) ? raw : null;
+      }
+
+      var user = readUsername();
+      var appLink = user ? 'hora://a/' + user : 'hora://';
+
+      document.getElementById('title').textContent = user ? txt.title.replace('{u}', user) : txt.anon;
+      document.getElementById('lead').textContent = txt.lead;
+      document.getElementById('noapp').textContent = txt.noapp;
+      if (user) document.getElementById('after').textContent = txt.after.replace('{u}', user);
+      if (user) document.title = '@' + user + ' – HORA';
+
+      var open = document.getElementById('open');
+      open.textContent = txt.open;
+      open.href = appLink;
+
+      function store(id, url, label) {
+        var a = document.getElementById(id);
+        if (url) { a.href = url; a.textContent = label; a.className = 'button store'; }
+        else { a.textContent = label + txt.soon; }
+      }
+      store('appstore', APP_STORE_URL, 'App Store');
+      store('playstore', PLAY_STORE_URL, 'Google Play');
+
+      // Try to open the app right away. Android: an intent link, which comes
+      // back to this page (tried=1) if Hora isn't installed. iPhone: no
+      // automatic try (Safari shows an error if the app is missing): the
+      // button does it, and with Universal Links the app opens before this page.
+      var isAndroid = /android/i.test(navigator.userAgent);
+      var tried = /[?&]tried=1/.test(location.search);
+      if (user && isAndroid && !tried) {
+        var back = location.origin + '/a/?u=' + encodeURIComponent(user) + '&tried=1';
+        location.replace('intent://a/' + user + '#Intent;scheme=hora;package=' + ANDROID_PACKAGE +
+          ';S.browser_fallback_url=' + encodeURIComponent(back) + ';end');
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="robots" content="noindex" />
+  <title>HORA</title>
+  <script>
+    // GitHub Pages has no routing: /a/<username> doesn't exist as a file and
+    // lands here. Send it to the invite page as /a/?u=<username>.
+    (function () {
+      var m = location.pathname.match(/^\/a\/([^\/]+)\/?$/);
+      if (m) location.replace('/a/?u=' + m[1] + location.hash);
+    })();
+  </script>
+</head>
+<body>
+  <div style="max-width:720px;margin:120px auto;padding:0 20px;font-family:Inter,Helvetica,Arial,sans-serif;line-height:1.6;">
+    <h1 style="font-size:48px;font-weight:600;margin-bottom:24px;">HORA</h1>
+    <p style="font-size:18px;margin-bottom:32px;">Pagina non trovata · Page not found</p>
+    <p><a href="/" style="color:#0033FF;text-decoration:none;">hora-app.com</a></p>
+  </div>
+</body>
+</html>

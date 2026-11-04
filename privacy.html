@@ -5,7 +5,7 @@
   <a href="/privacy-it" style="color:#0033FF;text-decoration:none;" lang="it">Italiano</a>
   <h1 style="font-size:40px;font-weight:600;margin:16px 0;">Privacy Policy – HORA</h1>
 
-  <p><strong>Last updated: [date of publication]</strong></p>
+  <p><strong>Last updated: 4 November 2026</strong></p>
 
   <p>HORA is an app that lets you know when your friends are free. This page explains which data we use, why, who can see it and what your rights are.</p>
 
@@ -16,22 +16,25 @@
   <h2>What data we use, why, and who sees it</h2>
   <ul>
     <li><strong>Phone number.</strong> To sign you in with a code sent by SMS. Only you see it. A friend sees it only after a mutual “It's Hora!” and only if you chose to share it.</li>
-    <li><strong>Email address.</strong> To contact you if needed, for example about a problem with your account. Only you see it.</li>
+    <li><strong>Name (for example “Giulia Rossi”).</strong> So your friends recognise you. All registered users can see it.</li>
     <li><strong>Username.</strong> So your friends can find you. All registered users can see it.</li>
-    <li><strong>Profile photo and bio (optional).</strong> To introduce yourself to friends. Registered users can see them. The photo is stored in Firebase Storage.</li>
-    <li><strong>Instagram username (optional).</strong> To share it with a friend. A friend sees it only after a mutual “It's Hora!” and only if you chose to share it.</li>
-    <li><strong>Friends list and friend requests.</strong> This is the core of the app. Only you and the friend involved see them.</li>
-    <li><strong>“Free” status and times (from / until).</strong> To let friends know you're free. Only the friends you choose each time you mark yourself free, and only while you are free. Nobody sees who else you chose.</li>
+    <li><strong>Email address (only accounts created with earlier versions of the app).</strong> We no longer ask for it and we do not use it. If you gave it to us, it stays among your private contacts as long as your account exists. Only you see it.</li>
+    <li><strong>Profile photo and bio (optional).</strong> To introduce yourself to friends. Registered users can see them. You pick the photo with your phone's photo picker: the app does not access your other photos. It is stored in Firebase Storage.</li>
+    <li><strong>Instagram username (optional).</strong> To share it with a friend. It is stored with your phone number, among your private contacts: only you see it. A friend sees it only after a mutual “It's Hora!” and only if you chose to share it.</li>
+    <li><strong>Friends list and friend requests.</strong> This is the core of the app. Only you and the friend involved see them. Each person can send at most 30 requests a day.</li>
+    <li><strong>Requests you declined.</strong> For 30 days, the person you declined cannot send you a new request. Only our server writes this, among your data. The declined person is not told.</li>
+    <li><strong>“Free” status and times (from / until).</strong> To let friends know you're free. You choose when it ends: in 1 hour, in 3 hours or “Tonight” (until 2 am). Only the friends you choose each time you mark yourself free, and only while you are free. Nobody sees who else you chose.</li>
     <li><strong>Last group of friends you picked.</strong> To suggest it next time. Only you see it.</li>
     <li><strong>“Hora?” requests (who asked whom, and when).</strong> To share contacts when the wish to meet is mutual (within 12 hours). Only the two people involved see them.</li>
     <li><strong>Blocked users.</strong> To stop the people you block from contacting you. When you block someone, we also remove the phone number and Instagram you had exchanged with them. Only you see this list.</li>
     <li><strong>Reports.</strong> To handle abuse: who reported whom, the reason and the text. Only the people who run HORA see them.</li>
     <li><strong>Push notification token.</strong> To send you notifications. Nobody sees it: only our server uses it.</li>
+    <li><strong>Age confirmation.</strong> When you sign up, you confirm you are at least 14. We do not store your answer or your date of birth.</li>
     <li><strong>App language.</strong> To write notifications in your language. Nobody sees it.</li>
     <li><strong>Anonymous daily counters.</strong> To check that the app works, for example how many requests are sent each day. They contain no names and no user identifiers.</li>
   </ul>
 
-  <p>HORA does not use your location. HORA does not access your address book. There are no ads, no tracking across apps or websites, and no analytics tools inside the app. We do not sell your data.</p>
+  <p>HORA does not use your location. HORA does not access your address book or your photo library. There are no ads, no tracking across apps or websites, and no analytics tools inside the app. We do not sell your data.</p>
 
   <h2>Legal basis</h2>
   <ul>
@@ -42,18 +45,26 @@
   <h2>Who processes the data for us</h2>
   <ul>
     <li><strong>Google Firebase</strong> (Google Ireland Ltd), as our data processor. It hosts the database, the server functions and the profile photos.</li>
-    <li><strong>Firebase Authentication</strong> (Google) sends the SMS login codes.</li>
+    <li><strong>Firebase Authentication</strong> (Google) sends the SMS login codes and stores your phone number and sign-in data.</li>
     <li><strong>Firebase Cloud Messaging</strong> (Google) delivers push notifications. On iPhone they go through the Apple Push Notification service (Apple).</li>
   </ul>
   <p>We share data with no one else, except when the law requires it.</p>
 
   <h2>Where the data is stored</h2>
-  <p>Data is stored in the European Union: the database in the eur3 region (Europe) and the server functions in europe-west1 (Belgium). Profile photos are stored in Firebase Storage, today in the United States (us-central1), under Google's standard contractual clauses.</p>
-  <p>Google may process some data outside the EU, for example to deliver SMS or notifications. In that case it uses the European Commission's standard contractual clauses.</p>
+  <p>The database is in the European Union, in the eur3 region (Europe). The server functions are in europe-west1 (Belgium).</p>
+  <p>Not everything is in the EU, though:</p>
+  <ul>
+    <li>Your phone number and sign-in data are in Firebase Authentication, a global Google service: they may be stored outside the EU.</li>
+    <li>Profile photos are stored in Firebase Storage, today in the United States (us-central1).</li>
+    <li>Google may also process some data outside the EU to deliver SMS or notifications.</li>
+  </ul>
+  <p>In all these cases Google uses the European Commission's standard contractual clauses.</p>
 
   <h2>How long we keep it</h2>
   <ul>
     <li>Your data stays as long as your account exists.</li>
+    <li>The phone number and Instagram you shared in an “It's Hora!” stay in that match, visible only to you and your friend, until one of you deletes their account or blocks the other.</li>
+    <li>Technical server logs (with your account ID, no name) are kept for 30 days.</li>
     <li>When you delete your account, your data is deleted immediately from our active systems.</li>
     <li>Backup copies are deleted within 30 days.</li>
     <li>Reports made by you or about you are kept for 12 months, also after deletion, to handle abuse.</li>
@@ -71,7 +82,7 @@
   <p>We make no decisions about you based only on automated processing, and we do no profiling.</p>
 
   <h2>Minors</h2>
-  <p>HORA is not meant for anyone under 14 years old.</p>
+  <p>HORA is not meant for anyone under 14 years old. When you sign up, we ask you to confirm you are at least 14.</p>
 
   <h2>Security</h2>
   <p>Data is stored on Google's cloud infrastructure and encrypted in transit. Access rules make sure each user can read only what they are allowed to see.</p>

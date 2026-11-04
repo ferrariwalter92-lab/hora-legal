@@ -1,4 +1,4 @@
-/* Hora · il cielo della pagina segue l'ora di chi guarda.
+/* Hora · tutta la pagina segue l'ora di chi guarda (cielo, fondi, testo: vedi hora.css).
    Senza JavaScript resta l'ora blu (19:41). Nessun dato esce dal telefono. */
 (function () {
   var root = document.documentElement;
@@ -23,12 +23,17 @@
     if (m < t + 50) return 'orablu';
     return 'notte';
   }
+  var FONDO = { giorno: '#F3F7FB', tramonto: '#2A2C70', orablu: '#13297A', notte: '#07102E' };
   function due(n) { return (n < 10 ? '0' : '') + n; }
 
   function aggiorna() {
     var d = new Date();
     var c = cielo(d);
-    if (root.getAttribute('data-cielo') !== c) root.setAttribute('data-cielo', c);
+    if (root.getAttribute('data-cielo') !== c) {
+      root.setAttribute('data-cielo', c);
+      var tema = document.querySelector('meta[name="theme-color"]');
+      if (tema) tema.setAttribute('content', FONDO[c]);
+    }
     var ora = due(d.getHours()) + ':' + due(d.getMinutes());
     var el = document.querySelectorAll('[data-ora]');
     for (var i = 0; i < el.length; i++) {
@@ -39,6 +44,8 @@
       if (el[i].tagName === 'TIME') el[i].setAttribute('datetime', ora);
     }
   }
+  // gira in <head>: il colore dell'ora è giusto già al primo disegno, poi si scrive l'ora nel testo
   aggiorna();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', aggiorna);
   setInterval(aggiorna, 20000);
 })();

@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="it" data-cielo="orablu">
+<head>
+<meta charset="utf-8">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stasera – HORA</title>
+<meta name="description" content="Qualcuno ti dice che stasera c’è. Se ti va, digli «Ci sto».">
+<meta name="theme-color" content="#07102E">
+<meta property="og:title" content="Stasera – HORA">
+<meta property="og:description" content="Qualcuno ti dice che stasera c’è. Se ti va, digli «Ci sto».">
+<meta property="og:image" content="https://hora-app.com/assets/hora-og.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/icona.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/icona-180.png">
+<link rel="preload" href="/assets/font/mona-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/hora.css">
+<script src="/assets/cielo.js"></script>
+<script>(function(d){if(window.matchMedia&&matchMedia("(prefers-reduced-motion: no-preference)").matches){d.classList.add("anima");setTimeout(function(){if(!window.horaMoto)d.classList.remove("anima")},4000)}})(document.documentElement)</script>
+</head>
+<body class="serata">
+<div class="apertura cielo">
+<header class="contenitore testata"><a class="marchio" href="/" aria-label="Hora"><svg class="scritta" viewBox="0 0 3325 721" aria-hidden="true" focusable="false"><path d="M0.0 710.5L150.0 710.5L150.0 411.5L650.0 411.5L650.0 710.5L800.0 710.5L800.0 10.5L650.0 10.5L650.0 285.5L150.0 285.5L150.0 10.5L0.0 10.5Z"/><path d="M1687.0 710.5L1837.0 710.5L1837.0 438.5L2033.0 438.5L2239.0 710.5L2415.0 710.5L2224.2 458.6L2224.6 459.0C2212.3 442.7 2217.6 430.0 2237.2 424.5L2237.3 424.5C2336.4 397.2 2387.0 329.9 2387.0 224.5C2387.0 83.3 2296.0 10.5 2119.5 10.5L1687.0 10.5ZM1837.0 312.5L1837.0 136.5L2119.5 136.5C2195.1 136.5 2234.0 166.4 2234.0 224.5C2234.0 282.6 2195.1 312.5 2119.5 312.5Z"/><path d="M2455.0 710.5L2613.4 710.5L2704.8 537.5L3075.2 537.5L3166.6 710.5L3325.0 710.5L3233.6 537.5L3167.0 411.5L2969.2 37.3L2955.0 10.5L2825.0 10.5L2810.8 37.3L2613.0 411.5L2546.4 537.5ZM2771.4 411.5L2890.0 187.1L3008.6 411.5Z"/><path class="o" d="M1605.0 360.5C1605.0 161.4 1443.6 -0.0 1244.5 -0.0C1045.4 -0.0 884.0 161.4 884.0 360.5C884.0 559.6 1045.4 721.0 1244.5 721.0C1443.6 721.0 1605.0 559.6 1605.0 360.5ZM1449.0 360.5C1449.0 473.4 1357.4 565.0 1244.5 565.0C1131.6 565.0 1040.0 473.4 1040.0 360.5C1040.0 247.6 1131.6 156.0 1244.5 156.0C1357.4 156.0 1449.0 247.6 1449.0 360.5Z"/></svg></a></header>
+<main class="contenitore corpo serata-corpo" id="contenuto">
+<div id="carica" aria-live="polite"><p class="sotto" id="carica-t">Un attimo…</p></div>
+
+<section id="viva" hidden aria-labelledby="chi">
+<p class="occhiello-s" id="occhiello">Stasera</p>
+<h1 id="chi" class="riga"></h1>
+<p id="fino" class="sotto fino"></p>
+<p id="nota" class="nota-serata" hidden></p>
+<p id="meteo" class="nota-piccola meteo" hidden><span id="meteo-t"></span> <a id="meteo-apple" href="https://weatherkit.apple.com/legal-attribution.html" hidden>Apple Weather</a></p>
+<form id="modulo" novalidate>
+<label for="nome" id="nome-l">Come ti chiami?</label>
+<div class="campo-riga">
+<input id="nome" name="nome" type="text" autocomplete="given-name" autocapitalize="words" maxlength="24" enterkeyhint="send" aria-describedby="nome-nota errore" required>
+<button class="bottone" id="ci-sto" type="submit">Ci sto</button>
+</div>
+<p id="errore" class="errore" role="alert"></p>
+<p id="nome-nota" class="nota-piccola"></p>
+</form>
+</section>
+
+<section id="fatto" hidden aria-labelledby="fatto-h">
+<h1 id="fatto-h" class="riga" tabindex="-1"></h1>
+<p id="fatto-p" class="sotto"></p>
+</section>
+
+<section id="finita" hidden aria-labelledby="finita-h">
+<h1 id="finita-h" class="riga">Questa serata è finita</h1>
+<p id="finita-p" class="sotto"></p>
+</section>
+
+<section id="guasto" hidden aria-labelledby="guasto-h">
+<h1 id="guasto-h" class="riga"></h1>
+<button class="bottone" id="riprova" type="button"></button>
+</section>
+
+<div id="scarica" hidden>
+<p class="nota-piccola" id="scarica-t">Scarica Hora per la prossima volta</p>
+<a id="appstore" class="button store soon" href="#">App Store · presto</a>
+<a id="playstore" class="button store soon" href="#">Google Play · presto</a>
+</div>
+</main>
+<div class="luci" aria-hidden="true"><span style="left:1.6%;bottom:24px"></span><span style="left:6.1%;bottom:19px"></span><span style="left:9.5%;bottom:37px"></span><span class="on" style="left:12%;bottom:46px;animation-delay:.4s"></span><span style="left:15.7%;bottom:42px"></span><span style="left:19.4%;bottom:20px"></span><span style="left:24%;bottom:67px"></span><span style="left:26.9%;bottom:28px"></span><span style="left:31.8%;bottom:75px"></span><span class="on" style="left:35.4%;bottom:39px;animation-delay:.9s"></span><span class="on" style="left:40.1%;bottom:17px;animation-delay:1.4s"></span><span style="left:43.5%;bottom:33px"></span><span style="left:45.5%;bottom:22px"></span><span style="left:49.5%;bottom:66px"></span><span style="left:52.9%;bottom:51px"></span><span style="left:57.7%;bottom:38px"></span><span style="left:61.2%;bottom:18px"></span><span class="on" style="left:63.7%;bottom:27px;animation-delay:1.9s"></span><span style="left:68.9%;bottom:41px"></span><span style="left:71.7%;bottom:51px"></span><span style="left:75.7%;bottom:33px"></span><span style="left:80.2%;bottom:59px"></span><span class="on" style="left:82.6%;bottom:51px;animation-delay:2.4s"></span><span style="left:87%;bottom:70px"></span><span style="left:91.2%;bottom:32px"></span><span style="left:95.5%;bottom:22px"></span></div>
+</div>
+<style>
+.serata-corpo { align-items: flex-start; }
+.serata-corpo section, .serata-corpo #carica { width: 100%; max-width: 34rem; }
+.serata-corpo .riga { overflow-wrap: anywhere; margin-bottom: 10px; }
+.serata-corpo h1:focus { outline: none; }
+.occhiello-s { margin: 0 0 8px; font-size: .8125rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .9; }
+.serata-corpo .fino { margin-bottom: 12px; font-weight: 600; }
+.nota-serata { margin: 0 0 10px; font-size: 1.125rem; font-style: italic; overflow-wrap: anywhere; }
+.serata-corpo .meteo { margin-bottom: 28px; opacity: .92; }
+.serata-corpo .meteo a { font-size: .8125rem; }
+#modulo label { display: block; font-weight: 600; margin: 0 0 8px; }
+.campo-riga { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; }
+#nome { flex: 1 1 12rem; min-width: 0; min-height: 52px; padding: 0 18px; border-radius: 999px; font: inherit; font-size: 1.0625rem;
+  color: var(--inchiostro); background: var(--carta); border: 2px solid transparent; }
+#nome:focus-visible { outline: 3px solid var(--fuoco); outline-offset: 2px; }
+#nome[aria-invalid="true"] { border-color: #FFB4A8; }
+.campo-riga .bottone { flex: 0 0 auto; border: 0; cursor: pointer; font: inherit; font-weight: 700; min-height: 52px; }
+.campo-riga .bottone[disabled] { opacity: .7; cursor: default; }
+.errore { margin: 10px 0 0; min-height: 1.5em; font-weight: 600; }
+.errore:empty { min-height: 0; margin: 0; }
+#nome-nota { margin-top: 10px; max-width: 40ch; opacity: .92; }
+#riprova { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+#scarica { margin-top: 40px; }
+#scarica-t { margin: 0 0 12px; font-weight: 600; }
+.button.store { display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; margin: 0 8px 10px 0; border-radius: 999px;
+  border: 1.5px solid rgba(255,255,255,.6); text-decoration: none; font-weight: 600; }
+[data-cielo="giorno"] .button.store { border-color: rgba(14,26,58,.5); }
+[data-cielo="giorno"] #nome { border-color: rgba(14,26,58,.35); background: #fff; }
+.button.store.soon { opacity: .85; pointer-events: none; border-style: dashed; }
+</style>
+<script>
+    (function () {
+      // La serata di chi ha mandato il link (hora-app.com/s/<codice>).
+      // Nessun cookie, niente in memoria nel browser, nessuna statistica.
+      // Il server (functions/src/senzaApp.ts) dà SOLO: nome, fino a, riga, meteo.
+      // Store: da riempire quando Hora è negli store (come la pagina d'invito).
+      var APP_STORE_URL = '';
+      var PLAY_STORE_URL = '';
+      var API = 'https://europe-west1-hora-a4598.cloudfunctions.net';
+      // Prove sul Mac: ?api=http://127.0.0.1:5001/<progetto>/europe-west1
+      // vale solo se anche la pagina è aperta da localhost (mai sul sito vero).
+      var locale = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+      var qApi = location.search.match(/[?&]api=([^&#]*)/);
+      if (locale && qApi) {
+        var a = decodeURIComponent(qApi[1]);
+        if (/^http:\/\/(localhost|127\.0\.0\.1):\d+\//.test(a)) API = a.replace(/\/+$/, '');
+      }
+      var qLang = location.search.match(/[?&]lang=(it|en)\b/);
+      var en = qLang ? qLang[1] === 'en' : !/^it\b/i.test(navigator.language || 'it');
+
+      var T = en ? {
+        loading: 'One moment…', kicker: 'Tonight',
+        who: '{n} is around', until: 'until {t}', untilTomorrow: 'until tomorrow at {t}',
+        label: "What's your name?", send: "I'm in", sending: 'Sending…',
+        privacy: '{n} only sees the name you write. We delete it when the evening ends.',
+        doneH: '{n} knows.', doneP: 'Talk where you already talk: in the group, on WhatsApp.',
+        endedP: 'For next time, get Hora: you see who is around, without asking the group.',
+        errH: "Can't load the evening.", retry: 'Try again', download: 'Get Hora for next time',
+        soon: ' · coming soon', title: '{n} is around tonight – HORA',
+        e: { empty: 'Write your name.', long: 'At most 24 characters.', bad: 'Just your name, letters only.',
+             full: 'This evening has had enough replies.', slow: 'Wait a few seconds and try again.',
+             ended: 'This evening is over.', net: 'No connection. Try again.' },
+        w: { now: 'Now', tonight: 'Tonight', night: 'Tonight', dry: '{w} {d}, dry', dryUntil: '{w} {d}, dry until {a}',
+             rain: '{w} {d}, rain', rainUntil: '{w} {d}, rain until {a}', snow: '{w} {d}, snow', snowUntil: '{w} {d}, snow until {a}' }
+      } : {
+        loading: 'Un attimo…', kicker: 'Stasera',
+        who: '{n} c’è', until: 'fino alle {t}', untilTomorrow: 'fino a domani alle {t}',
+        label: 'Come ti chiami?', send: 'Ci sto', sending: 'Mando…',
+        privacy: '{n} vede solo il nome che scrivi. Lo cancelliamo quando finisce la serata.',
+        doneH: '{n} lo sa.', doneP: 'Sentitevi dove vi sentite già: nel gruppo, su WhatsApp.',
+        endedP: 'Per la prossima volta scarica Hora: vedi chi c’è senza chiederlo nel gruppo.',
+        errH: 'Non riesco a caricare la serata.', retry: 'Riprova', download: 'Scarica Hora per la prossima volta',
+        soon: ' · presto', title: '{n} c’è stasera – HORA',
+        e: { empty: 'Scrivi il tuo nome.', long: 'Al massimo 24 caratteri.', bad: 'Solo il nome, con le lettere.',
+             full: 'Questa serata ha già tante risposte.', slow: 'Aspetta qualche secondo e riprova.',
+             ended: 'Questa serata è finita.', net: 'Niente connessione. Riprova.' },
+        w: { now: 'Adesso', tonight: 'Stasera', night: 'Stanotte', dry: '{w} {d}, asciutto', dryUntil: '{w} {d}, asciutto fino {a}',
+             rain: '{w} {d}, pioggia', rainUntil: '{w} {d}, pioggia fino {a}', snow: '{w} {d}, neve', snowUntil: '{w} {d}, neve fino {a}' }
+      };
+      if (en) {
+        document.documentElement.lang = 'en';
+        document.getElementById('finita-h').textContent = 'This evening is over';
+      }
+
+      function $(id) { return document.getElementById(id); }
+      function fill(s, v) { return s.replace(/\{(\w)\}/g, function (_, k) { return v[k] == null ? '' : v[k]; }); }
+      function show(id) {
+        ['carica', 'viva', 'fatto', 'finita', 'guasto'].forEach(function (x) { $(x).hidden = x !== id; });
+        $('scarica').hidden = !(id === 'fatto' || id === 'finita');
+      }
+
+      // L'ora come la vede chi ha mandato il link (Milano).
+      var TZ = 'Europe/Rome';
+      function hhmm(ms) {
+        return new Intl.DateTimeFormat(en ? 'en-GB' : 'it-IT', { hour: '2-digit', minute: '2-digit', timeZone: TZ }).format(new Date(ms));
+      }
+      function day(ms) { return new Intl.DateTimeFormat('en-CA', { timeZone: TZ }).format(new Date(ms)); }
+      function hour(ms) { return Number(new Intl.DateTimeFormat('en-GB', { hour: 'numeric', hourCycle: 'h23', timeZone: TZ }).format(new Date(ms))); }
+      // «domani» solo se non è oggi né le prime ore di stanotte (prima delle 6), come nell'app.
+      function anotherDay(ms) {
+        var now = Date.now();
+        if (day(ms) === day(now)) return false;
+        return !(day(ms) === day(now + 864e5) && hour(ms) < 6);
+      }
+      // «alle 2», «all'1», «a mezzanotte» / «2 AM», «midnight»
+      function aOra(ms) {
+        var h = hour(ms);
+        if (!en) return h === 0 ? 'a mezzanotte' : h === 1 ? 'all’1' : 'alle ' + h;
+        return h === 0 ? 'midnight' : (h % 12 === 0 ? 12 : h % 12) + (h < 12 ? ' AM' : ' PM');
+      }
+      function meteo(w) {
+        var k = w.kind === 'dry' ? 'dry' : w.kind === 'dryUntil' ? 'dryUntil'
+          : (w.snow ? (w.at ? 'snowUntil' : 'snow') : (w.at ? 'rainUntil' : 'rain'));
+        return fill(T.w[k], { w: T.w[w.when] || T.w.tonight, d: w.temp + '°', a: w.at ? aOra(w.at) : '' });
+      }
+
+      // Codice da /s/<codice> o da ?t=<codice> (404.html manda qui).
+      function readToken() {
+        var m = location.pathname.match(/^\/s\/([A-Za-z0-9_-]{22})\/?$/);
+        var q = location.search.match(/[?&]t=([A-Za-z0-9_-]{22})(?:&|#|$)/);
+        return m ? m[1] : q ? q[1] : null;
+      }
+      var token = readToken();
+
+      // Funzioni «chiamabili» di Firebase: POST {data} → {result} o {error}.
+      function call(name, data) {
+        return fetch(API + '/' + name, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: data }), credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer'
+        }).then(function (r) {
+          return r.json().catch(function () { return {}; }).then(function (b) {
+            if (r.ok && b && 'result' in b) return b.result;
+            var err = new Error((b && b.error && b.error.message) || 'internal');
+            err.status = (b && b.error && b.error.status) || 'INTERNAL';
+            throw err;
+          });
+        });
+      }
+
+      function store(id, url, label) {
+        var a = $(id);
+        if (url) { a.href = url; a.textContent = label; a.className = 'button store'; }
+        else { a.textContent = label + T.soon; }
+      }
+      $('scarica-t').textContent = T.download;
+      store('appstore', APP_STORE_URL, 'App Store');
+      store('playstore', PLAY_STORE_URL, 'Google Play');
+      $('carica-t').textContent = T.loading;
+      $('occhiello').textContent = T.kicker;
+      $('nome-l').textContent = T.label;
+      $('ci-sto').textContent = T.send;
+      $('finita-p').textContent = T.endedP;
+      $('guasto-h').textContent = T.errH;
+      $('riprova').textContent = T.retry;
+
+      var owner = '';
+      function ended() {
+        show('finita');
+        document.title = (en ? 'Evening over' : 'Serata finita') + ' – HORA';
+      }
+
+      function load() {
+        show('carica');
+        if (!token) { ended(); return; }
+        call('readSessionLink', { token: token }).then(function (r) {
+          if (!r || r.status !== 'live') { ended(); return; }
+          owner = String(r.name || '');
+          $('chi').textContent = fill(T.who, { n: owner });
+          $('fino').textContent = fill(anotherDay(r.until) ? T.untilTomorrow : T.until, { t: hhmm(r.until) });
+          if (r.note) { $('nota').textContent = '«' + r.note + '»'; $('nota').hidden = false; }
+          if (r.weather) {
+            $('meteo-t').textContent = meteo(r.weather);
+            $('meteo').hidden = false;
+            $('meteo-apple').hidden = !r.weather.apple;
+          }
+          $('nome-nota').textContent = fill(T.privacy, { n: owner });
+          document.title = fill(T.title, { n: owner });
+          show('viva');
+        }).catch(function () { show('guasto'); });
+      }
+      $('riprova').addEventListener('click', load);
+
+      var busy = false;
+      function problem(msg) {
+        $('errore').textContent = msg;
+        $('nome').setAttribute('aria-invalid', 'true');
+        $('nome').focus();
+      }
+      $('nome').addEventListener('input', function () {
+        $('errore').textContent = '';
+        $('nome').removeAttribute('aria-invalid');
+      });
+      $('modulo').addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        if (busy) return;
+        var name = $('nome').value.replace(/\s+/g, ' ').trim();
+        if (!name) { problem(T.e.empty); return; }
+        if (Array.from(name).length > 24) { problem(T.e.long); return; }
+        busy = true;
+        var btn = $('ci-sto');
+        btn.disabled = true; btn.textContent = T.sending;
+        call('replySessionLink', { token: token, name: name }).then(function (r) {
+          $('fatto-h').textContent = fill(T.doneH, { n: owner });
+          $('fatto-p').textContent = T.doneP;
+          show('fatto');
+          $('fatto-h').focus();
+        }).catch(function (err) {
+          var m = err.message || '';
+          if (err.status === 'FAILED_PRECONDITION') { ended(); return; }
+          if (err.status === 'INVALID_ARGUMENT') problem(m === 'name-empty' ? T.e.empty : m === 'name-long' ? T.e.long : T.e.bad);
+          else if (err.status === 'RESOURCE_EXHAUSTED') problem(m === 'full' ? T.e.full : T.e.slow);
+          else problem(T.e.net);
+        }).then(function () {
+          busy = false; btn.disabled = false; btn.textContent = T.send;
+        });
+      });
+
+      load();
+    })();
+</script>
+<script src="/assets/moto.js" defer></script>
+</body>
+</html>

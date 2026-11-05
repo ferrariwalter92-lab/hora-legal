@@ -39,7 +39,8 @@
 
   <h2 id="quali-dati-usiamo-perche-e-chi-li-vede">Quali dati usiamo, perché e chi li vede</h2>
   <ul>
-    <li><strong>Numero di telefono.</strong> Per farti entrare con un codice via SMS. Lo vedi solo tu. Un amico lo vede solo dopo un «È Hora!» reciproco e solo se hai scelto di condividerlo.</li>
+    <li><strong>Numero di telefono (facoltativo se entri con Apple o Google).</strong> Per farti entrare con un codice via SMS e, se ce l'hai messo, per farti trovare dagli amici che ce l'hanno in rubrica. Se entri con Apple o Google puoi aggiungerlo dopo, o mai: lo confermiamo con un SMS solo in quel momento. Lo vedi solo tu. Un amico lo vede solo dopo un «È Hora!» reciproco e solo se hai scelto di condividerlo.</li>
+    <li><strong>Accesso con Apple o con Google (solo se lo scegli).</strong> Per farti entrare senza numero. Da Apple o da Google riceviamo: un codice che identifica il tuo account presso di loro, il tuo indirizzo email e, se lo concedi, il tuo nome. Con Apple puoi nascondere la tua email: in quel caso riceviamo un indirizzo che Apple inoltra a te (finisce con @privaterelay.appleid.com). Il nome lo usiamo solo per proporlo all'iscrizione, e puoi cambiarlo. L'email resta nei dati di accesso: non la vede nessuno e non la usiamo per scriverti. Non riceviamo la tua password, i tuoi contatti o altro dal tuo account Apple o Google. Quando cancelli l'account, revochiamo anche l'accesso che avevi dato a HORA presso Apple o Google.</li>
     <li><strong>Nome (per esempio «Giulia Rossi»).</strong> Perché gli amici ti riconoscano. Lo vedono tutti gli utenti registrati.</li>
     <li><strong>Nome utente.</strong> Per farti trovare dagli amici. Lo vedono tutti gli utenti registrati.</li>
     <li><strong>Email (solo account creati con le versioni precedenti dell'app).</strong> Non la chiediamo più e non la usiamo. Se ce l'avevi data, resta fra i tuoi contatti privati finché esiste l'account. La vedi solo tu.</li>
@@ -54,7 +55,7 @@
     <li><strong>Richieste «Hora?» (chi a chi, e quando).</strong> Per condividere i contatti quando la voglia di vedersi è reciproca (entro 12 ore). Le vedono solo le due persone coinvolte.</li>
     <li><strong>Utenti bloccati.</strong> Per impedire a chi blocchi di contattarti. Quando blocchi qualcuno, togliamo anche il numero e l’Instagram che vi eravate scambiati. La lista la vedi solo tu.</li>
     <li><strong>Numeri della tua rubrica (solo se usi «Cerca nella rubrica»).</strong> Per mostrarti quali dei tuoi contatti sono già su HORA. L'app legge la rubrica solo se tocchi «Cerca» e dai il permesso; su iPhone puoi anche dare solo alcuni contatti. Al nostro server arrivano, cifrati, solo i numeri: nomi, email e il resto della rubrica restano sul telefono. Il server li confronta con i numeri degli iscritti e li scarta subito: non li salviamo, non finiscono nei registri e non scriviamo niente ai tuoi contatti. Anche il numero di chi non usa HORA passa dal server solo per quell'istante. Contro gli abusi, al massimo 3 ricerche e 2.000 numeri al giorno: contiamo quanti, non quali.</li>
-    <li><strong>«Trovabile dalla rubrica».</strong> Di base è acceso: chi ha il tuo numero in rubrica e usa «Cerca nella rubrica» vede che sei su HORA, con nome e nome utente (il numero no: ce l'ha già lui). Puoi spegnerlo quando vuoi in Profilo → Impostazioni → «Trovabile dalla rubrica». Chi hai bloccato, o chi ti ha bloccato, non ti trova comunque. La scelta la vedi solo tu.</li>
+    <li><strong>«Trovabile dalla rubrica».</strong> Di base è acceso: chi ha il tuo numero in rubrica e usa «Cerca nella rubrica» vede che sei su HORA, con nome e nome utente (il numero no: ce l'ha già lui). Puoi spegnerlo quando vuoi in Profilo → Impostazioni → «Trovabile dalla rubrica». Chi hai bloccato, o chi ti ha bloccato, non ti trova comunque. Se sei entrato con Apple o Google e non hai aggiunto il numero, nessuno ti trova dalla rubrica (tu puoi comunque cercare gli altri). La scelta la vedi solo tu.</li>
     <li><strong>Segnalazioni.</strong> Per gestire gli abusi: chi segnala chi, il motivo e il testo. Le vede solo chi gestisce HORA.</li>
     <li><strong>Codice per le notifiche.</strong> Per mandarti le notifiche. Non lo vede nessuno: lo usa solo il nostro server.</li>
     <li><strong>Conferma dell'età.</strong> All'iscrizione confermi di avere almeno 14 anni. Non salviamo né la risposta né la tua data di nascita.</li>
@@ -73,7 +74,8 @@
   <h2 id="chi-tratta-i-dati-per-noi">Chi tratta i dati per noi</h2>
   <ul>
     <li><strong>Google Firebase</strong> (Google Ireland Ltd), come responsabile del trattamento. Ospita il database, le funzioni del server e le foto profilo.</li>
-    <li><strong>Firebase Authentication</strong> (Google) invia gli SMS con il codice di accesso e conserva il numero di telefono e i dati di accesso.</li>
+    <li><strong>Firebase Authentication</strong> (Google) invia gli SMS con il codice di accesso e conserva i dati di accesso: il numero di telefono, se c'è, e il codice e l'email ricevuti da Apple o Google, se entri con loro.</li>
+    <li><strong>Apple</strong> («Accedi con Apple») e <strong>Google</strong> («Accedi con Google»), solo se scegli di entrare con loro: verificano chi sei e ci mandano i dati scritti sopra. Il tuo account Apple o Google resta regolato dalle loro informative.</li>
     <li><strong>Firebase Cloud Messaging</strong> (Google) consegna le notifiche. Su iPhone passano dal servizio di notifiche di Apple (Apple Push Notification service).</li>
   </ul>
   <p>Non diamo i dati a nessun altro, salvo quando lo impone la legge.</p>
@@ -82,7 +84,7 @@
   <p>Il database è nell'Unione Europea, nella regione eur3 (Europa). Le funzioni del server sono in europe-west1 (Belgio).</p>
   <p>Non tutto però sta nell'Unione Europea:</p>
   <ul>
-    <li>Il numero di telefono e i dati di accesso sono in Firebase Authentication, un servizio globale di Google: possono essere conservati anche fuori dall'Unione Europea.</li>
+    <li>Il numero di telefono, l'email ricevuta da Apple o Google e gli altri dati di accesso sono in Firebase Authentication, un servizio globale di Google: possono essere conservati anche fuori dall'Unione Europea.</li>
     <li>Le foto profilo sono in Firebase Storage, oggi negli Stati Uniti (us-central1).</li>
     <li>Google può trattare alcuni dati fuori dall'Unione Europea anche per consegnare SMS o notifiche.</li>
   </ul>

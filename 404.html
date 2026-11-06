@@ -11,6 +11,8 @@
     (function () {
       var m = location.pathname.match(/^\/a\/([^\/]+)\/?$/);
       if (m) location.replace('/a/?u=' + m[1] + location.hash);
+      var s = location.pathname.match(/^\/s\/([A-Za-z0-9_-]{22})\/?$/);
+      if (s) location.replace('/s/?t=' + s[1] + location.search.replace(/^\?/, '&') + location.hash);
     })();
   </script>
 <link rel="icon" href="/assets/icona.svg" type="image/svg+xml">
